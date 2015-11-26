@@ -16,6 +16,10 @@ module.exports = React.createClass({
     }
   },
 
+  setTotal: function (i) {
+    this.setState({total: this.state.total + i});
+  },
+
   addCounter: function (e) {
     var counters = this.state.counters.slice();
     counters.push(this.state.counterName);
@@ -31,6 +35,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
+    var primary = this;
     return (
       <div className="App">
         <h1 className="App__header">Counter App</h1>
@@ -38,7 +43,7 @@ module.exports = React.createClass({
 
         {this.state.counters.map(function (name) {
           return (
-            <Counter name={name}/>
+            <Counter name={name} onChange={primary.setTotal} />
           );
         })}
 
@@ -67,10 +72,12 @@ var Counter = React.createClass({
 
   decrement: function () {
     this.setState({count: this.state.count - 1});
+    this.props.onChange(-1);
   },
 
   increment: function () {
     this.setState({count: this.state.count + 1});
+    this.props.onChange(1);
   },
 
   render: function () {
